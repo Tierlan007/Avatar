@@ -1,0 +1,66 @@
+ 
+ 
+ Message Stream Server Codes
+ 
+ 0* = Server Codes
+ 00 = System nachricht
+ 01 = Admin Nachricht
+ 
+ 1* = Chat Codes
+ 11 = einfache Chat nachricht
+ 12 = Match Chat
+ 
+ 2* = Avatar Codes
+ 21 = Avatarwahl
+ 
+ 3* = Kampf Codes
+ 31 = Kampf suche
+ 32 = Match Nummer mitgeteilt / befindet sich in clientHandler()
+ 
+ 
+ Message Stream Client Codes
+ 
+ 0* = Server Codes
+ 01 = Admin Nachricht
+ 
+ 1* = Chat Codes
+ 11 = chat nachricht
+ 
+ 2* = Match Codes
+ 21 = queue abfragen
+ 22 = Player Nummer mitteilung
+ 23 = warten = 0
+ 
+ Message Stream Match Codes
+ 
+ 00 = System
+ 01 = Stärke übertragung Player 1
+ 02 = Inteligenz übertragung Player 1
+ 03 = Geschick übertragung Player 1
+ 
+ 11 = Stärke übertragung Player 2
+ 12 = Inteligenz übertragung Player 2
+ 13 = Geschick übertragung Player 2
+ 
+ 21 = Chat Player1 > Player2
+ 22 = Chat Player2 > Player1 
+ 
+ 81 = Stats anzeigen
+ 82 = Spieler ready
+ 
+ 91 = Player 2 gewonnen
+ 92 = Player 1 gewonnen
+ 
+ 
+ Sonstiges
+ queuestates 0 = nicht suchend    1 = suchend     2 = im kampf
+ 
+ 
+ ErrorCodes
+ 
+ 001 = schreiben in loging datei nicht möglich(ServerSeitig)
+ 
+ 
+ Server Befehle
+ 'matchqueue'     - Aktiviert die Matchqueue (class Matchqueue() implements Runnable)
+ 'closequeue'     - Deaktiviert die Matchqueue (class Matchqueue() implements Runnable)
