@@ -3,7 +3,7 @@
  Message Stream Server Codes
  
  0* = Server Codes
- 00 = System nachricht
+ 00 = System nachricht test123
  01 = Admin Nachricht
  
  1* = Chat Codes
@@ -34,13 +34,13 @@
  Message Stream Match Codes
  
  00 = System
- 01 = Stärke übertragung Player 1
- 02 = Inteligenz übertragung Player 1
- 03 = Geschick übertragung Player 1
+ 01 = StÃ¤rke Ã¼bertragung Player 1
+ 02 = Inteligenz Ã¼bertragung Player 1
+ 03 = Geschick Ã¼bertragung Player 1
  
- 11 = Stärke übertragung Player 2
- 12 = Inteligenz übertragung Player 2
- 13 = Geschick übertragung Player 2
+ 11 = StÃ¤rke Ã¼bertragung Player 2
+ 12 = Inteligenz Ã¼bertragung Player 2
+ 13 = Geschick Ã¼bertragung Player 2
  
  21 = Chat Player1 > Player2
  22 = Chat Player2 > Player1 
@@ -58,7 +58,7 @@
  
  ErrorCodes
  
- 001 = schreiben in loging datei nicht möglich(ServerSeitig)
+ 001 = schreiben in loging datei nicht mÃ¶glich(ServerSeitig)
  
  
  Server Befehle
