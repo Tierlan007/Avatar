@@ -248,7 +248,7 @@ public class ServerStart {
       } catch(Exception e) {
         e.printStackTrace();
       }
-      System.out.println("Save");
+      
       queue = new Thread(new Matchqueue());
       queue.start();
       

@@ -2,10 +2,10 @@ package avatar.Character;
 
 import java.util.*;
 import java.net.*;
-import java.io.*;
+import java.io.*;      
 import avatar.*;
 
-public class Aang implements Avatare{
+public class Kyoshi implements Avatare{
 
   public String ATTACKE1 = "Airslash"; 
   public String ATTACKE2 = "Firepunch";
@@ -14,7 +14,7 @@ public class Aang implements Avatare{
   
   public Atk atk = new Atk();
   
-  public Aang(){
+  public Kyoshi(){
     
     }
     

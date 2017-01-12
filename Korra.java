@@ -2,10 +2,10 @@ package avatar.Character;
 
 import java.util.*;
 import java.net.*;
-import java.io.*;
+import java.io.*;   
 import avatar.*;
 
-public class Aang implements Avatare{
+public class Korra implements Avatare{
 
   public String ATTACKE1 = "Airslash"; 
   public String ATTACKE2 = "Firepunch";
@@ -13,10 +13,10 @@ public class Aang implements Avatare{
   public String ATTACKE4 = "";
   
   public Atk atk = new Atk();
-  
-  public Aang(){
+   
+  public Korra(){
     
-    }
+    } 
     
   public double Attacken (int str, int inti, int ges){
     boolean loop1 = true;

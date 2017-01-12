@@ -1,5 +1,6 @@
 package avatar;
 
+import avatar.Character.*;
 import java.util.*;
 import java.net.*;
 import java.io.*;

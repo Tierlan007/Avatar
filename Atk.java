@@ -1,5 +1,6 @@
 package avatar;
  
+import avatar.Character.*;
 import java.util.*;
 import java.net.*;
 import java.io.*;
@@ -7,6 +8,8 @@ import java.io.*;
 public class Atk{
   
   public Random rng = new Random();
+  
+  public double Attacken;
   
   public Atk(){
     

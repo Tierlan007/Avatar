@@ -14,6 +14,7 @@ public class Match{
   BufferedReader reader;  
   
   public boolean warten = true;
+  public boolean match_rounds;
   
   public int Player1_ava;
   public int Player2_ava;
@@ -31,7 +32,7 @@ public class Match{
   public int Pl2_str;
   public int Pl2_int;
   public int Pl2_ges;
-  
+  public int synchro_wait;
   
   public double Pl1maxhp;
   public double Pl1curhp;
@@ -114,14 +115,28 @@ public class Match{
       } // end of switch
       
       while (warten == true) { 
-      
+        
       }     
       Pl1maxhp = Pl1_str*2; 
       Pl1curhp = Pl1maxhp;
       Pl2maxhp = Pl2_str*2; 
       Pl2curhp = Pl2maxhp;
       statsAnzeigen();
+      Matchbeginn();
     }
+  }
+  
+  
+  public void Matchbeginn(){
+    match_rounds = true;
+    synchro_wait = 0;
+    while (match_rounds == true) { 
+      while (synchro_wait <2) { 
+        
+      } 
+      synchro_wait = 0;
+    } 
+    
   }
   
   public void sort(String s){
@@ -161,6 +176,26 @@ public class Match{
         Player1_wri.flush();
         warten = false;
         break;
+      case "81":  
+        if (just_message.equals("1")) {
+          absendenPL1("11","Avatar : "+Pl1_name);
+          absendenPL1("11","Statuswerte: ");    
+          absendenPL1("11","HP  : "+Pl1curhp+" / "+Pl1maxhp);
+          absendenPL1("11","STR : "+Pl1_str);
+          absendenPL1("11","INT : "+Pl1_int);
+          absendenPL1("11","GES : "+Pl1_ges); 
+        } else {
+          absendenPL2("11","Avatar : "+Pl2_name);
+          absendenPL2("11","Statuswerte: ");    
+          absendenPL2("11","HP  : "+Pl2curhp+" / "+Pl2maxhp);
+          absendenPL2("11","STR : "+Pl2_str);
+          absendenPL2("11","INT : "+Pl2_int);
+          absendenPL2("11","GES : "+Pl2_ges);
+        } 
+        break;
+      case "82": 
+        synchro_wait++;
+        break;
       case "91":
         absendenPL2("91","");
         break;
@@ -190,7 +225,7 @@ public class Match{
     Player1_wri.flush();
     Player2_wri.println(s);
     Player2_wri.flush();
-    }
+  }
   
   public void statsAnzeigen(){
     absendenPL1("11","Avatar : "+Pl1_name);
