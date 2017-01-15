@@ -6,5 +6,11 @@ import java.net.*;
 import java.io.*;
 
 public interface Avatare{
-  public double Attacken(int str, int inti, int ges);
-  }
+  public int Attacken();
+  public void calcu_stats(); 
+  public int getSTR();      
+  public int getINT(); 
+  public int getGES(); 
+  public String getNAME();
+  public ClientStart getMyClient();
+}

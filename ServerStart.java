@@ -11,7 +11,8 @@ public class ServerStart {
   public InetAddress addr;
   public int clientCounter = 0;
   FileWriter fw;
-  BufferedWriter logger;
+  BufferedWriter logger;  
+                       
   
   ArrayList<PrintWriter> clientWriter;
   ArrayList<InetAddress> inetAdrr;
@@ -43,6 +44,7 @@ public class ServerStart {
         e.printStackTrace();
       } 
       logging("Connected\t\t: "+inetAdrr.get(position).getHostName());
+      System.out.println("Connecting to: "+inetAdrr.get(position).getHostName());
     }                                                  
       
     public void run(){
@@ -88,7 +90,8 @@ public class ServerStart {
         break;
       case  "01":     
         System.out.println("SERVER : "+message);
-        
+        break;
+      case  "02":     
         break;        
       case "11":    
         System.out.println(inetAdrr.get(pos).getHostName()+" : "+message);
@@ -101,13 +104,11 @@ public class ServerStart {
       case "21" :                                                                                                                           
         tmp = Integer.parseInt(just_message);
         clientAvatar.set(position,tmp);
-        System.out.println(clientAvatar.get(position));
         break;
       case "31" :                 
         queueArray.set(position,1);
         System.out.println("Spieler: "+inetAdrr.get(pos).getHostName()+" betrat die queue");
         queueSucher += 1;
-        System.out.println("queueSucher: "+queueSucher);
         break;   
       default:        
         
@@ -136,7 +137,12 @@ public class ServerStart {
         match_num.add(0);
         Thread t = new Thread(new clientHandler(clientSocket,clientCounter));
         t.start();
-        System.out.println(inetAdrr.get(clientCounter).getHostName());
+        System.out.println("Connecttion ready to: "+inetAdrr.get(clientCounter).getHostName());  
+        try {  
+          einzelnenClientAnsprechen("235",clientCounter);
+        } catch(Exception ex) {
+          ex.printStackTrace();   
+        } 
         clientCounter++;
       } 
     } catch(Exception e) {
@@ -160,37 +166,12 @@ public class ServerStart {
       Socket sock2;
       System.out.println("Matchqueue aktiv");
       while (queue_super == true) {   
-        /*    if (queueSucher >= 2) { 
-        System.out.println("enough Player");
-        for (int i = 0;i<clientCounter ;i++ ) {
-        if (queueArray.get(i) == 1) {
-        for (int in = 0;i<clientCounter ;i++ ) {
-        if (in != i && queueArray.get(in) == 1) {
-        System.out.println("creating Match");  
-        matches.add(new Match());
-        matches.get(anzahlMatch).start(clientAvatar.get(i),clientAvatar.get(in),clientWriter.get(i),clientWriter.get(in),i,in,anzahlMatch);
-        queueArray.set(i,2); 
-        queueArray.set(in,2);
-        match_num.set(i,1);
-        match_num.set(in,1);                 
-        einzelnenClientAnsprechen("21"+(anzahlMatch+1),i);
-        einzelnenClientAnsprechen("21"+(anzahlMatch+1),in);
-        in = clientCounter;
-        i = clientCounter;
-        queueSucher -= 2;
-        anzahlMatch++;
-        } 
-        } 
-        } 
-        }  
-        }                */
         
         queueplay1 = clientCounter+1;
         queueplay2 = clientCounter+1;
         
         if (queue_state == true) {
           if (queueSucher >= 2) {
-            System.out.println("genug spieler");
             for (int i = 0;i<clientCounter ;i++ ) {
               if (queueArray.get(i) == 1) {
                 queueplay1 = i;
@@ -206,7 +187,7 @@ public class ServerStart {
             if (queueplay1 != clientCounter+1 && queueplay2 != clientCounter) {
               System.out.println("creating Match");  
               matches.add(new Match());
-              matches.get(anzahlMatch).start(clientAvatar.get(queueplay1),clientAvatar.get(queueplay2),clientWriter.get(queueplay1),clientWriter.get(queueplay2),queueplay1,queueplay2,anzahlMatch);
+              matches.get(anzahlMatch).start(clientWriter.get(queueplay1),clientWriter.get(queueplay2),queueplay1,queueplay2,anzahlMatch);
               queueArray.set(queueplay1,2); 
               queueArray.set(queueplay2,2);
               match_num.set(queueplay1,1);
@@ -223,7 +204,7 @@ public class ServerStart {
           } else {
             
           } 
-        
+          
         } else {
           
         } 
@@ -318,7 +299,4 @@ public class ServerStart {
     return clientAvatar;
   }
   
-  /*public ArrayList<Integer> getqueueArray(){
-    return queueArray();
-  } */ 
 }

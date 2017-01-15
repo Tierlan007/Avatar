@@ -3,15 +3,16 @@ package avatar.Character;
 import java.util.*;
 import java.net.*;
 import java.io.*;        
-import avatar.*;
+import avatar.*; 
+import avatar.Attacken.*;
 
-public class MissingNo implements Avatare{
+public abstract class MissingNo implements Avatare{
 
   public MissingNo(){
     
   }
-
-  public double Attacken (int str, int inti, int ges){
+  
+  public int Attacken (){
     boolean loop1 = true;
     String eingabe;
     Scanner scan = new Scanner(System.in);
@@ -34,7 +35,8 @@ public class MissingNo implements Avatare{
         System.out.println("MissingNo4");                              
         loop1 = false;
       }
-    } 
+    }             
+    System.out.println("Attacken eingabe verfehlt");
     return 0;
   }
 }

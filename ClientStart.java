@@ -13,17 +13,15 @@ public class ClientStart{
   
   public ClientMatch clMa;
   
-  public int Str_ava;
-  public int Int_ava;
-  public int Ges_ava;
   public int player_num;
   public int queue;
-  public int winner = 0;                //1 = gewonnen 2 = verloren 0 = nicht zugewiesen
+  private int winner = 0;                //1 = gewonnen 2 = verloren 0 = nicht zugewiesen
   public int warten = 0;
-  public String NAME_AVA;
+  public Avatare myAvatar;
   
-  public void los(){
-    netzwerkVerbinden(); 
+  public void los(){       
+    warten = 1;
+    netzwerkVerbinden();  
     Thread eingehend = new Thread(new inReader());
     eingehend.start();
     writer.flush();
@@ -34,7 +32,10 @@ public class ClientStart{
     Scanner scan = new Scanner(System.in);
     
     while (loop1 == true) { 
-      String eingabe = "";
+      String eingabe = "";  
+      while (warten == 1) { 
+      } 
+      warten = 1;
       
       System.out.println("Waehlen sie ihren Avatar: ");
       System.out.println("<1> Aang      (Allrounder)");
@@ -61,50 +62,39 @@ public class ClientStart{
       writer.flush();
       System.out.println("Ein Gegner wird für sie gesucht, bitte warten");
       while (queue == 2) { 
-        
       } 
       System.out.println("Match gefunden");
       queue = 1; 
-      warten = 1;
       while (warten == 1) { 
-        
       } 
-      warten = 1;
+      warten = 1; 
+      System.out.println("player_num : "+player_num);
+      
       if (player_num == 1) {
-        writer.println("01"+Str_ava);
-        writer.flush(); 
-        writer.println("02"+Int_ava);
-        writer.flush();
-        writer.println("03"+Ges_ava);
-        writer.flush();
-        
+        outWriter("01",""+myAvatar.getSTR());
+        outWriter("02",""+myAvatar.getINT());
+        outWriter("03",""+myAvatar.getGES()); 
+        outWriter("04",""+myAvatar.getNAME());
       } else {
         while (warten == 1) { 
-        } 
-        writer.println("11"+Str_ava);
-        writer.flush();       
-        writer.println("12"+Int_ava);
-        writer.flush();
-        writer.println("13"+Ges_ava);
-        writer.flush();   
-        
+        }            
+        outWriter("11",""+myAvatar.getSTR());
+        outWriter("12",""+myAvatar.getINT());
+        outWriter("13",""+myAvatar.getGES());
+        outWriter("14",""+myAvatar.getNAME());
       } 
       while (warten == 1) { 
       }
-      warten= 1;
+      warten= 1; 
+      outWriter("82","");
       while (warten == 1) { 
       }
       warten= 1;
-      clMa = new ClientMatch(this,Str_ava,Int_ava,Ges_ava, player_num);
+      clMa = new ClientMatch(this, player_num);
+      while (warten == 1) { 
+      }
+      warten= 1;  
       System.out.println("Out of Match");
-      if (winner == 1) {   
-        
-      }else if (winner == 2){
-        outWriter("9"+player_num,"");
-      }  
-      while (warten == 1) { 
-      }
-      warten= 1;
       loop1 = false;
     } 
   }
@@ -113,25 +103,13 @@ public class ClientStart{
     Random rng = new Random();
     
     if (tmp.equals("1")) {
-      Str_ava = rng.nextInt(40-30+1)+30;
-      Int_ava = rng.nextInt(40-30+1)+30;
-      Ges_ava = rng.nextInt(40-30+1)+30;
-      NAME_AVA = "Aang";
-    }else if (tmp.equals("2")) {
-      Str_ava = rng.nextInt(30-20+1)+20;
-      Int_ava = rng.nextInt(60-50+1)+50;
-      Ges_ava = rng.nextInt(30-20+1)+20;  
-      NAME_AVA = "Korra";
+      myAvatar = new Aang(this);
+    }else if (tmp.equals("2")) { 
+      myAvatar = new Korra(this);
     }else if (tmp.equals("3")) {
-      Str_ava = rng.nextInt(60-50+1)+50;
-      Int_ava = rng.nextInt(30-20+1)+20;
-      Ges_ava = rng.nextInt(30-20+1)+20;  
-      NAME_AVA = "Roku";
-    }else if (tmp.equals("4")) {
-      Str_ava = rng.nextInt(30-20+1)+20;
-      Int_ava = rng.nextInt(30-20+1)+20;
-      Ges_ava = rng.nextInt(60-50+1)+50;   
-      NAME_AVA = "Kyoshi";
+      myAvatar = new Roku(this);
+    }else if (tmp.equals("4")) { 
+      myAvatar = new Kyoshi(this);
     }
   }
   
@@ -168,7 +146,7 @@ public class ClientStart{
     String s = messageCode + message;
     writer.println(s);
     writer.flush();
-    }
+  }
   
   public void sort(String s){
     char[] comp_message = s.toCharArray();
@@ -193,7 +171,6 @@ public class ClientStart{
         break;
       case "22":
         player_num = Integer.parseInt(just_message);
-        System.out.println("player_num : "+player_num);
         break;
       case "23":
         warten = 0;
@@ -203,20 +180,52 @@ public class ClientStart{
         
         break; 
       case "81":
-        clMa.setWarten(2);
+        clMa.setWarten(0);
+        break; 
+      case "82":
+        
+        break; 
+      case "83":
+        if (just_message.equals("10")) { 
+          if (player_num == 1) {
+            winner = 2;
+          } else {
+            winner = 1;
+          }   
+          clMa.setWarten(0);
+        } else if (just_message.equals("10")) { 
+          if (player_num == 1) {
+            winner = 1;
+          } else {
+            winner = 2;
+          } 
+          clMa.setWarten(0);
+        } else if (just_message.equals("11")) { 
+          winner = 3;                 
+          clMa.setWarten(0);
+        } else if (just_message.equals("00")) {
+          clMa.setWarten(0);
+        } 
         break;
+      case "90":
+        winner = 3;
+        break;  
       case "91":
         winner = 1;
-        break;    
+        break;  
+      case "92":  
+        winner = 2;
+        break;  
       default: 
         
     } 
     
   }
   
-  public void setWinner(int i){
-    winner = i;
-    }
+  public void setWinner(int i){winner = i;}
+  public int getWinner(){return winner;}
+  public Avatare getAvatar(){return myAvatar;}
+  public ClientStart getClient(){return this;}
   
   public static void main(String[] args){
     new ClientStart().los();
